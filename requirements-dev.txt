@@ -1,0 +1,20 @@
+-r requirements.txt
+black>=19.10b0
+codecov
+coverage
+flake8
+flake8-assertive
+flake8-bugbear
+flake8-comprehensions
+flake8-django
+ipdb
+ipython-sql
+pluggy>=0.7
+pytest>=6.0.1
+pytest-cov
+pytest-django
+pytest-mock
+pytest-sugar
+pytest-xdist
+termcolor
+wdb
