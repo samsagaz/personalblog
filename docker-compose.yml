@@ -1,0 +1,44 @@
+version: '3'
+
+volumes:
+  pgdata:
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+    env_file:
+      - .env
+
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+      - ./scripts/db/:/docker-entrypoint-initdb.d/
+    env_file:
+      - .env.db
+
+  redis:
+    image: redis:6-alpine
+    environment:
+      - REDIS_PASSWORD=samsagaz
+    expose:
+      - "6379"
+
+  wdb:
+    image: samsagaz/wdb
+    expose:
+      - 1984
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    healthcheck:
+      test: echo | telnet 127.0.0.1 25
